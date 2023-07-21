@@ -1,7 +1,8 @@
 import { initializeApp } from 'firebase/app'
 import {
   getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider,
-  createUserWithEmailAndPassword
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword
 } from 'firebase/auth'
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore'
 
@@ -50,6 +51,15 @@ export const createAuthWithEmailAndPassword = async (email, password) => {
   try {
     if (!email || !password) throw new Error('Email or password is wrong')
     return await createUserWithEmailAndPassword(auth, email, password)
+
+  } catch (error) {
+    throw error
+  }
+}
+export const signInAuthWithEmailAndPassword = async (email, password) => {
+  try {
+    if (!email || !password) throw new Error('Email or password is wrong')
+    return await signInWithEmailAndPassword(auth, email, password)
 
   } catch (error) {
     throw error
