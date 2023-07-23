@@ -30,11 +30,13 @@ const SignUp = () => {
       console.log(email, password);
       if (password != confirmPassword)
         throw new Error("Both password not matched");
-      const response = await createAuthWithEmailAndPassword(email, password);
-      await createUserDocumentFromAuth(response.user, { displayName });
+      const { user } = await createAuthWithEmailAndPassword(email, password);
+      await createUserDocumentFromAuth(user, { displayName });
       resetField();
     } catch (error) {
-      console.log(error);
+      if (error.code === "auth/email-already-in-use")
+        console.log("Cannot create user,email already in use");
+      else console.log(error);
     }
   };
   return (

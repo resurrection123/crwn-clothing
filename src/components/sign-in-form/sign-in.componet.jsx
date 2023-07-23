@@ -15,7 +15,6 @@ const defaultFormFields = {
 const SingIn = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
-
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormFields({ ...formFields, [name]: value });
@@ -26,16 +25,15 @@ const SingIn = () => {
   const handlerSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await signInAuthWithEmailAndPassword(email, password);
-      console.log(response);
+      await signInAuthWithEmailAndPassword(email, password);
+      resetField();
     } catch (error) {
       console.log(error);
     }
   };
   const signInWithGoogle = async () => {
     try {
-      const response = await signInWithGooglePopup();
-      await createUserDocumentFromAuth(response.user);
+      await signInWithGooglePopup();
     } catch (error) {
       switch (error.code) {
         case "auth/wrong-password":
