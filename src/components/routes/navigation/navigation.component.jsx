@@ -10,7 +10,6 @@ import { CartContext } from "../../../contexts/cart.context";
 const Navigation = () => {
   const { currentUser } = useContext(UserContext);
   const { toggle } = useContext(CartContext);
-
   console.log(toggle);
   return (
     <Fragment>
