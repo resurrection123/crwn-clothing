@@ -4,7 +4,6 @@ import "./sign-in.styles.scss";
 import Button from "../button/button.componet";
 import {
   signInWithGooglePopup,
-  createUserDocumentFromAuth,
   signInAuthWithEmailAndPassword,
 } from "../../utils/firebase/firebase.utilis";
 

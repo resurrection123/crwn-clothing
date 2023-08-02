@@ -5,7 +5,7 @@ import {
   signInWithEmailAndPassword,
   signOut, onAuthStateChanged
 } from 'firebase/auth'
-import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore'
+import { getFirestore, doc, getDoc, setDoc, collection, writeBatch, query, getDocs } from 'firebase/firestore'
 
 const firebaseConfig = {
   apiKey: "AIzaSyAesirQ4vBGg90j7mqhi5pEo7C5Ak5bYhA",
@@ -17,7 +17,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const firebase = initializeApp(firebaseConfig);
+initializeApp(firebaseConfig);
 
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({
@@ -28,6 +28,17 @@ export const auth = getAuth();
 export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
 export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleProvider);
 export const db = getFirestore();
+
+
+export const addCollectionAndDocuments = async (collectionKey, objectToAdd) => {
+  const collectionRef = collection(db, collectionKey);
+  const batch = writeBatch(db);
+  objectToAdd.forEach(element => {
+    const docRef = doc(collectionRef, element.title.toLowerCase());
+    batch.set(docRef, element)
+  });
+  await batch.commit();
+}
 
 export const createUserDocumentFromAuth = async (userAuth, additionalInformation = {}) => {
   if (!userAuth) return;
@@ -47,7 +58,12 @@ export const createUserDocumentFromAuth = async (userAuth, additionalInformation
     throw new Error("Issue creating user" + error.meessage);
   }
 }
-
+export const getCategoriesAndDocuments = async () => {
+  const collectionRef = collection(db, 'categories');
+  const q = query(collectionRef);
+  const querySnapShot = await getDocs(q);
+  return querySnapShot.docs.map(el => el.data())
+}
 export const createAuthWithEmailAndPassword = async (email, password) => {
   try {
     if (!email || !password) throw new Error('Email or password is wrong')

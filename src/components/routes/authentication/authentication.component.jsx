@@ -7,7 +7,7 @@ import "./authentication.styles.scss";
 const SignIn = () => {
   useEffect(() => {
     (async () => {
-      const response = await getRedirectResult(auth);
+      await getRedirectResult(auth);
     })();
   }, []);
 

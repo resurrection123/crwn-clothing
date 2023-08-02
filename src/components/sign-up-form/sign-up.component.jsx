@@ -28,7 +28,7 @@ const SignUp = () => {
     event.preventDefault();
     try {
       console.log(email, password);
-      if (password != confirmPassword)
+      if (password !== confirmPassword)
         throw new Error("Both password not matched");
       const { user } = await createAuthWithEmailAndPassword(email, password);
       await createUserDocumentFromAuth(user, { displayName });
