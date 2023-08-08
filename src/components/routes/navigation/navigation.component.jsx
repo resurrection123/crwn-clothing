@@ -4,14 +4,18 @@ import "./navigation.styles.scss";
 import { ReactComponent as CrwnLogo } from "../../../asset/crown.svg";
 import CartDropDown from "../../cart-dropdown/cart-dropdown.componet";
 import CartIcon from "../../cart-icon/cart-icon.component";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectCurrrentUser } from "../../../store/user/user.selector";
-import { signOutUser } from "../../../utils/firebase/firebase.utilis";
 import { selectIsCartOpen } from "../../../store/cart/cart.selector";
+import { signOutStart } from "../../../store/user/user.action";
 
 const Navigation = () => {
   const currentUser = useSelector(selectCurrrentUser);
   const toggle = useSelector(selectIsCartOpen);
+  const dispatch = useDispatch();
+  const logOut = () => {
+    dispatch(signOutStart());
+  };
   return (
     <Fragment>
       <div className="navigation">
@@ -26,7 +30,7 @@ const Navigation = () => {
             Contact
           </Link>
           {currentUser ? (
-            <span className="nav-link" onClick={signOutUser}>
+            <span className="nav-link" onClick={logOut}>
               SIGN OUT
             </span>
           ) : (

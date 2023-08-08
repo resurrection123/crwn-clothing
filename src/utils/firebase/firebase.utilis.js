@@ -55,8 +55,9 @@ export const createUserDocumentFromAuth = async (userAuth, additionalInformation
       ...additionalInformation
     });
   } catch (error) {
-    throw new Error("Issue creating user" + error.meessage);
+    throw new Error("Issue creating user " + error);
   }
+  return userSnaposhot;
 }
 export const getCategoriesAndDocuments = async () => {
   const collectionRef = collection(db, 'categories');
@@ -85,3 +86,15 @@ export const signInAuthWithEmailAndPassword = async (email, password) => {
 
 export const signOutUser = async () => await signOut(auth);
 export const onAuthStateChangedListener = (fn) => onAuthStateChanged(auth, fn);
+
+
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unSubscribe = onAuthStateChanged(auth, (userAuth) => {
+      unSubscribe();
+      resolve(userAuth);
+    },
+      reject
+    );
+  })
+}
