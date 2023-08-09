@@ -1,7 +1,12 @@
 import "./button.styles.scss";
-const Button = ({ text, classButton, ...otherProps }) => {
+import Spinner from "../spinner/spinner.component";
+const Button = ({ text, classButton, isLoading, ...otherProps }) => {
   return (
-    <button className={`button-container ${classButton}`} {...otherProps}>
+    <button
+      disabled={isLoading}
+      className={`button-container ${classButton}`}
+      {...otherProps}
+    >
       {text}
     </button>
   );

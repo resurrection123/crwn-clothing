@@ -5,12 +5,12 @@ import { ReactComponent as CrwnLogo } from "../../../asset/crown.svg";
 import CartDropDown from "../../cart-dropdown/cart-dropdown.componet";
 import CartIcon from "../../cart-icon/cart-icon.component";
 import { useDispatch, useSelector } from "react-redux";
-import { selectCurrrentUser } from "../../../store/user/user.selector";
+import { selectCurrentUser } from "../../../store/user/user.selector";
 import { selectIsCartOpen } from "../../../store/cart/cart.selector";
 import { signOutStart } from "../../../store/user/user.action";
 
 const Navigation = () => {
-  const currentUser = useSelector(selectCurrrentUser);
+  const currentUser = useSelector(selectCurrentUser);
   const toggle = useSelector(selectIsCartOpen);
   const dispatch = useDispatch();
   const logOut = () => {
